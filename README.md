@@ -17,21 +17,23 @@ $ npm install mmon -g
 $ mmon
 ```
 
+Press `q` (quit) or `CTRL-C` to exit mmon.
+
 ## Features
 
-![micro-monitor](https://www.plus-innovations.com/images/micro-monitor.png)
+![micro-monitor](https://www.plus-innovations.com/images/micro-monitor-1-0-2.png)
 
-- current CPU Load
+- current CPU load
 - current MEM usage
-- File System usage (overall and per mount)
-- File System Stats (R/W per second, IOPS)
-- Network Stats (rx, tx per second)
-- \# Network Connections
-- \# Processes
-- Users online
-- Docker Containers
+- file system usage (overall and per mount)
+- file system stats (R/W per second, IOPS)
+- network stats (rx, tx per second)
+- \# network connections
+- \# processes
+- users online
+- [docker][docker-url] containers
 
-I tested it on several Debian, Raspbian, Ubuntu distributions as well as OS X (Mavericks, Yosemite, El Captain).
+I tested it on several Debian, Raspbian, Ubuntu distributions, inside Docker containers as well as OS X (Mavericks, Yosemite, El Captain).
 
 This CLI tool depends on the [systeminformation][systeminformation-url] npm package that I wrote. Have a look at it, if you are interested. 
 
@@ -51,6 +53,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.0.3          | 2016-08-19     | tiny improvement, updated copyright notes |
 | 1.0.2          | 2016-08-19     | tiny fixes |
 | 1.0.1          | 2016-08-19     | documentation update, colors |
 | 1.0.0          | 2016-08-19     | initial version |
@@ -79,7 +82,7 @@ Written by Sebastian Hildebrandt [sebhildebrandt](https://github.com/sebhildebra
 Linux is a registered trademark of Linus Torvalds, OS X is a registered trademark of Apple Inc.,
 Windows is a registered trademark of Microsoft Corporation. Node.js is a trademark of Joyent Inc.,
 Intel is a trademark of Intel Corporation, Raspberry Pi is a trademark of the Raspberry Pi Foundation,
-Debian is a trademark of the Debian Project, Ubuntu is a trademark of Canonical Ltd.
+Debian is a trademark of the Debian Project, Ubuntu is a trademark of Canonical Ltd., Docker is a trademarks of Docker, Inc.
 All other trademarks are the property of their respective owners.
 
 ## License [![MIT license][license-img]][license-url]
