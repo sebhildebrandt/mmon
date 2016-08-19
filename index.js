@@ -182,7 +182,7 @@ function displayAll(first) {
   lines.push('');
 
   // File System
-  lines[0] = lines[0] + cols.log('File System', 'white') + '          Mointpoint       Used %      ';
+  lines[0] = lines[0] + cols.log('File System', 'white', 'darkgray') + cols.log('          Mointpoint       Used %', 'lightgray', 'darkgray') + '      ';
   for (let i = 1; i <= 5; i++) {
     //console.log(dynamicData.fsSize[i-1]);
     if (i <= dynamicData.fsSize.length) {
@@ -198,7 +198,7 @@ function displayAll(first) {
   }
 
   // Users
-  lines[0] = lines[0] + cols.log('Users online', 'white') + '   TTY      IP                    DATE';
+  lines[0] = lines[0] + cols.log('Users online', 'white','darkgray') + cols.log('   TTY      IP                    DATE', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dynamicData.users.length) {
       if (i < 5 || dynamicData.users.length == 5) {
@@ -226,7 +226,7 @@ function displayAll(first) {
   lines.push('');
 
   // Docker
-  lines[0] = lines[0] + cols.log('Docker Container', 'white') + '          ID          Image                PORTS                       CPU%     MEM%';
+  lines[0] = lines[0] + cols.log('Docker Container', 'white', 'darkgray') + cols.log('          ID          Image                PORTS                       CPU%     MEM%', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dockerData.length) {
       if (i < 5 || dockerData.length == 5) {
@@ -258,7 +258,7 @@ function displayAll(first) {
   lines.push('');
   lines.push('');
 
-  lines[0] = lines[0] + cols.log('MISC:', 'white');
+  lines[0] = lines[0] + cols.log('MISC:                                                                                               ', 'white', 'darkgray');
   lines[1] = lines[1] + 'Internet Latency : ' + (dynamicData.inetLatency >= 0 ? draw.fmtNum(dynamicData.inetLatency, 2, 8, 2000, 5000) + ' ms' : ' -              ');
   lines[2] = lines[2] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? ' !!' : '   ') : ' ---- ');
 

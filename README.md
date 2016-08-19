@@ -14,7 +14,7 @@ micro-mon - Simple CLI system and OS information tool for Linux and OS X impleme
 
 ```bash
 $ npm install mmon -g
-& mmon
+$ mmon
 ```
 
 ## Features
@@ -51,7 +51,8 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
-| 1.0.0          | 2016-08-20     | initial version |
+| 1.0.1          | 2016-08-19     | documentation update, colors |
+| 1.0.0          | 2016-08-19     | initial version |
 
 ## Comments
 
