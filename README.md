@@ -51,6 +51,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.0.2          | 2016-08-19     | tiny fixes |
 | 1.0.1          | 2016-08-19     | documentation update, colors |
 | 1.0.0          | 2016-08-19     | initial version |
 
