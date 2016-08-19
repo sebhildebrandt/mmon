@@ -1,0 +1,53 @@
+{
+  "name": "mmon",
+  "version": "1.0.0",
+  "description": "micro monitor - CLI system monitor",
+  "license": "MIT",
+  "author": "Sebastian Hildebrandt <hildebrandt@plus-innovations.com> (https://plus-innovations.com)",
+  "homepage": "https://github.com/sebhildebrandt/mmon",
+  "main": "index.js",
+  "bin": {
+    "mmon": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "system information",
+    "sysinfo",
+    "monitor",
+    "monitoring",
+    "os",
+    "linux",
+    "osx",
+    "cpu",
+    "cpuload",
+    "memory",
+    "file system",
+    "fsstats",
+    "diskio",
+    "netstats",
+    "network",
+    "network connections",
+    "processes",
+    "users",
+    "internet",
+    "docker",
+    "battery",
+    "CLI"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebhildebrandt/mmon.git"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ],
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "dependencies": {
+    "systeminformation": "^3.2.0"
+  }
+}
