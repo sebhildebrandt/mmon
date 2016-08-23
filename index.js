@@ -260,7 +260,7 @@ function displayAll(first) {
 
   lines[0] = lines[0] + cols.log('MISC:                                                                                               ', 'white', 'darkgray');
   lines[1] = lines[1] + 'Internet Latency : ' + (dynamicData.inetLatency >= 0 ? draw.fmtNum(dynamicData.inetLatency, 2, 8, 2000, 5000) + ' ms' : ' -              ');
-  lines[2] = lines[2] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? ' !!' : '   ') : ' ---- ');
+  lines[2] = lines[2] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? cols.log(' ++','green') : '   ') : ' ---- ');
 
   console.log();
   lines.forEach(line => {

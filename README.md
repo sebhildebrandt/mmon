@@ -17,7 +17,7 @@ $ npm install mmon -g
 $ mmon
 ```
 
-Press `q` (quit) or `CTRL-C` to exit mmon.
+Press `q` (quit) or `CTRL-c` to exit mmon.
 
 ## Features
 
@@ -53,6 +53,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.0.4          | 2016-08-23     | tiny fixes (merge, use strict) |
 | 1.0.3          | 2016-08-19     | tiny improvement, updated copyright notes |
 | 1.0.2          | 2016-08-19     | tiny fixes |
 | 1.0.1          | 2016-08-19     | documentation update, colors |
