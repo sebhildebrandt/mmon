@@ -43,13 +43,13 @@ let dockerinterval = interval < 4000 ? interval * 2 : interval;
 // ------------------------------------------------
 
 function machine_os() {
-  let line = draw.strLeft((staticData.system.manufacturer + ' ' + staticData.system.model).trim(), 100);
+  let line = draw.strLeft((staticData.system.manufacturer + ' ' + staticData.system.model).trim(), 110);
   line = draw.strAddRight(line, staticData.os.distro + ' - ' + staticData.os.release + ' - Kernel: ' + staticData.os.kernel);
   return line;
 }
 
 function cpu_host() {
-  let line = draw.strLeft(staticData.cpu.manufacturer + ' ' + staticData.cpu.brand + ' - ' + staticData.cpu.speed + ' GHz - ' + staticData.cpu.cores + ' Cores', 100);
+  let line = draw.strLeft(staticData.cpu.manufacturer + ' ' + staticData.cpu.brand + ' - ' + staticData.cpu.speed + ' GHz - ' + staticData.cpu.cores + ' Cores', 110);
   line = draw.strAddRight(line, 'Host: ' + staticData.os.hostname + (dynamicData && dynamicData.time && dynamicData.time.uptime ? ' - Uptime: ' + time.uptime(dynamicData.time.uptime) : ''));
   return line;
 }
@@ -108,23 +108,23 @@ function calc_nwconn() {
 function startScreen() {
   primatyNet = calc_primary_net();
   draw.clear();
-  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 100), 'black', 'gray'));
+  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 110), 'black', 'gray'));
   console.log(machine_os());
   console.log(cpu_host());
 
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n');
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
   console.log('                                            STARTING ...');
-  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n');
+  console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 
-  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 100);
+  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
   footer = draw.strAddRight(footer, '(c) ' + new Date().getFullYear() + ' Sebastian Hildebrandt ');
   console.log(cols.log(footer, 'black', 'gray'));
   draw.hide();
 }
 
 function displayAll(first) {
-  if (!first) draw.up(35);
-  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 100), 'black', 'gray'));
+  if (!first) draw.up(39);
+  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 110), 'black', 'gray'));
   console.log(machine_os());
   console.log(cpu_host());
   console.log();
@@ -132,9 +132,9 @@ function displayAll(first) {
   let fssize = calc_fs();
   let nwconn = calc_nwconn();
 //	console.log(cols.log('                                                    CPU           MEM           FS            DiskIO', 'white'));
-  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 32, true, true) + '      ' + cols.log('CPU:  ', 'white') + ('  ' + dynamicData.currentLoad.currentload.toFixed(2)).substr(-5) + '  %   ' + cols.log('MEM:   ', 'white') + ('  ' + (dynamicData.mem.used / dynamicData.mem.total * 100).toFixed(2)).substr(-5) + ' %   ' + cols.log('FS:      ', 'white') + ('  ' + (fssize.use).toFixed(2)).substr(-5) + ' %');
-  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 32, true, true) + '      Speed:' + ('  ' + dynamicData.cpuCurrentspeed.avg.toFixed(2)).substr(-5) + 'GHz   ' + 'Total: ' + ('  ' + (dynamicData.mem.total / 1073741824.0).toFixed(2)).substr(-5) + 'GB   ' + 'Total: ' + ('    ' + (fssize.size / 1073741824.0).toFixed(2)).substr(-7) + 'GB');
-  console.log('FS:  ' + draw.progress(fssize.use, 32, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 6, 70, 90) : '  -.--') + ' °C   ' + 'Free:  ' + ('  ' + (dynamicData.mem.free / 1073741824.0).toFixed(2)).substr(-5) + 'GB   ' + 'Free:  ' + ('    ' + (fssize.free / 1073741824.0).toFixed(2)).substr(-7) + 'GB');
+  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload,2,6) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100,2,6) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use,2,6) + ' %');
+  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg,2,4) + 'GHz    ' + 'Total: ' + '  ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0,2,4) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0,2,9) + 'GB');
+  console.log('FS:  ' + draw.progress(fssize.use, 37, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 7, 70, 90) : '   -.--') + ' °C    ' + 'Free:  ' + draw.fmtNum(dynamicData.mem.free / 1073741824.0,2,6) + 'GB    ' + 'Free:  ' + draw.fmtNum(fssize.free / 1073741824.0,2,8) + 'GB');
 
   console.log();
   let lines = [];
@@ -144,29 +144,29 @@ function displayAll(first) {
   lines.push('');
 
   lines[0] = lines[0] + cols.log('FS Stats', 'white');
-  lines[1] = lines[1] + 'RX: ' + (dynamicData.fsStats.rx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.rx_sec, 2, 12, 500000, 1000000) + ' B/s' : ' -              ');
-  lines[2] = lines[2] + 'WX: ' + (dynamicData.fsStats.wx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.wx_sec, 2, 12, 500000, 1000000) + ' B/s' : ' -              ');
-  lines[3] = lines[3] + 'TX: ' + (dynamicData.fsStats.tx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.tx_sec, 2, 12, 500000, 1000000) + ' B/s' : ' -              ');
+  lines[1] = lines[1] + 'RX: ' + (dynamicData.fsStats.rx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.rx_sec, 2, 14, 500000, 1000000) + ' B/s' : ' -                ');
+  lines[2] = lines[2] + 'WX: ' + (dynamicData.fsStats.wx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.wx_sec, 2, 14, 500000, 1000000) + ' B/s' : ' -                ');
+  lines[3] = lines[3] + 'TX: ' + (dynamicData.fsStats.tx_sec >= 0 ? draw.fmtNum(dynamicData.fsStats.tx_sec, 2, 14, 500000, 1000000) + ' B/s' : ' -                ');
 
-  lines[0] = lines[0] + '                 ' + cols.log('IOPS', 'white');
-  lines[1] = lines[1] + '     ' + 'rIO: ' + (dynamicData.disksIO.rIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.rIO_sec, 2, 8, 200, 500) + ' per s' : ' -            ');
-  lines[2] = lines[2] + '     ' + 'wIO: ' + (dynamicData.disksIO.wIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.wIO_sec, 2, 8, 200, 500) + ' per s' : ' -            ');
-  lines[3] = lines[3] + '     ' + 'tIO: ' + (dynamicData.disksIO.tIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.tIO_sec, 2, 8, 200, 500) + ' per s' : ' -            ');
+  lines[0] = lines[0] + '                    ' + cols.log('IOPS', 'white');
+  lines[1] = lines[1] + '      ' + 'rIO: ' + (dynamicData.disksIO.rIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.rIO_sec, 2, 10, 200, 500) + ' per s' : ' -              ');
+  lines[2] = lines[2] + '      ' + 'wIO: ' + (dynamicData.disksIO.wIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.wIO_sec, 2, 10, 200, 500) + ' per s' : ' -              ');
+  lines[3] = lines[3] + '      ' + 'tIO: ' + (dynamicData.disksIO.tIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.tIO_sec, 2, 10, 200, 500) + ' per s' : ' -              ');
 
-  lines[0] = lines[0] + '                     ' + cols.log('NET:   ', 'white') + ('            ' + primatyNet.iface).substr(-12);
+  lines[0] = lines[0] + '                       ' + cols.log('NET:   ', 'white') + ('              ' + primatyNet.iface).substr(-12);
   lines[1] = lines[1] + '      ' + 'IP: ' + ('               ' + primatyNet.ip4).substr(-15);
   lines[2] = lines[2] + '      ' + 'RX: ' + (dynamicData.networkStats.rx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.rx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
   lines[3] = lines[3] + '      ' + 'TX: ' + (dynamicData.networkStats.tx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.tx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
 
-  lines[0] = lines[0] + '   ' + cols.log('NW-Connect.', 'white');
-  lines[1] = lines[1] + '   All:    ' + draw.fmtNum(nwconn.all, 0, 3);
-  lines[2] = lines[2] + '   Establ: ' + draw.fmtNum(nwconn.established, 0, 3);
-  lines[3] = lines[3] + '   Listen: ' + draw.fmtNum(nwconn.listen, 0, 3);
+  lines[0] = lines[0] + '     ' + cols.log('NW-Connect. ', 'white');
+  lines[1] = lines[1] + '     All:    ' + draw.fmtNum(nwconn.all, 0, 4);
+  lines[2] = lines[2] + '     Establ: ' + draw.fmtNum(nwconn.established, 0, 4);
+  lines[3] = lines[3] + '     Listen: ' + draw.fmtNum(nwconn.listen, 0, 4);
 
-  lines[0] = lines[0] + '   ' + cols.log('Processes', 'white');
-  lines[1] = lines[1] + '   All:     ' + draw.fmtNum(dynamicData.processes.all, 0, 4);
-  lines[2] = lines[2] + '   Running: ' + draw.fmtNum(dynamicData.processes.running, 0, 4);
-  lines[3] = lines[3] + '   Blocked: ' + draw.fmtNum(dynamicData.processes.blocked, 0, 4);
+  lines[0] = lines[0] + '     ' + cols.log('Processes', 'white');
+  lines[1] = lines[1] + '     All:     ' + draw.fmtNum(dynamicData.processes.all, 0, 5);
+  lines[2] = lines[2] + '     Running: ' + draw.fmtNum(dynamicData.processes.running, 0, 5);
+  lines[3] = lines[3] + '     Blocked: ' + draw.fmtNum(dynamicData.processes.blocked, 0, 5);
 
   lines.forEach(line => {
     console.log(line)
@@ -182,32 +182,65 @@ function displayAll(first) {
   lines.push('');
 
   // File System
-  lines[0] = lines[0] + cols.log('File System', 'white', 'darkgray') + cols.log('          Mointpoint       Used %', 'lightgray', 'darkgray') + '      ';
+  lines[0] = lines[0] + cols.log('File System', 'white', 'darkgray') + cols.log('             Montpoint          Used %', 'lightgray', 'darkgray') + '      ';
   for (let i = 1; i <= 5; i++) {
     //console.log(dynamicData.fsSize[i-1]);
     if (i <= dynamicData.fsSize.length) {
       if (i < 5 || dynamicData.fsSize.length == 5) {
-        lines[i] = lines[i] + draw.strLeft(dynamicData.fsSize[i - 1].fs, 20) + ' ' + draw.strLeft(dynamicData.fsSize[i - 1].mount, 15) + ' ' + draw.fmtNum(dynamicData.fsSize[i - 1].use, 2, 6, 70, 85) + '%      ';
+        lines[i] = lines[i] + draw.strLeft(dynamicData.fsSize[i - 1].fs, 23) + ' ' + draw.strLeft(dynamicData.fsSize[i - 1].mount, 17) + ' ' + draw.fmtNum(dynamicData.fsSize[i - 1].use, 2, 6, 70, 85) + '%      ';
       } else {
-        lines[i] = lines[i] + '+' + draw.fmtNum(dynamicData.fsSize.length - 4, 0, 2) + ' more Mounts...                              ';
+        lines[i] = lines[i] + '+' + draw.fmtNum(dynamicData.fsSize.length - 4, 0, 2) + ' more Mounts...                                   ';
 
       }
     } else {
-      lines[i] = lines[i] + ' '.repeat(50);
+      lines[i] = lines[i] + ' '.repeat(55);
     }
   }
 
   // Users
-  lines[0] = lines[0] + cols.log('Users online', 'white','darkgray') + cols.log('   TTY      IP                    DATE', 'lightgray', 'darkgray');
+  lines[0] = lines[0] + cols.log('Users online', 'white','darkgray') + cols.log('     TTY        IP                     DATE', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dynamicData.users.length) {
       if (i < 5 || dynamicData.users.length == 5) {
-        lines[i] = lines[i] + draw.strLeft(dynamicData.users[i - 1].user, 14) + ' ' + draw.strLeft(dynamicData.users[i - 1].tty, 8) + ' ' + draw.strLeft(dynamicData.users[i - 1].ip, 15) + ' ' + draw.strRight(dynamicData.users[i - 1].date, 10)
+        lines[i] = lines[i] + draw.strLeft(dynamicData.users[i - 1].user, 16) + ' ' + draw.strLeft(dynamicData.users[i - 1].tty, 10) + ' ' + draw.strLeft(dynamicData.users[i - 1].ip, 15) + ' ' + draw.strRight(dynamicData.users[i - 1].date, 11)
       } else {
         lines[i] = lines[i] + '+' + draw.fmtNum(dynamicData.users.length - 4, 0, 2) + ' more users online...';
       }
     } else {
-      lines[i] = lines[i] + ' '.repeat(50);
+      lines[i] = lines[i] + ' '.repeat(55);
+    }
+  }
+
+  console.log();
+  lines.forEach(line => {
+    console.log(line)
+  });
+
+  // Raster Processes
+  lines = [];
+  lines.push('');
+  lines.push('');
+  lines.push('');
+  lines.push('');
+  lines.push('');
+  lines.push('');
+
+  // Processes
+  lines[0] = lines[0] + cols.log('PID   Top 5 Processes', 'white', 'darkgray') + cols.log('                                  State          TTY           User             PCPU PMEM', 'lightgray', 'darkgray');
+  // top 5 processes
+  let topProcesses = dynamicData.processes.list.sort(function(a, b){return b.pcpu-a.pcpu}).splice(0, 5);
+  for (let i = 1; i <= 5; i++) {
+    if (i <= topProcesses.length) {
+      lines[i] = lines[i] +
+      draw.strLeft(topProcesses[i - 1].pid + '     ', 5) + ' ' +
+      draw.strLeft(topProcesses[i - 1].command, 48) + ' ' +
+      draw.strLeft(topProcesses[i - 1].state, 13) + '  ' +
+      draw.strLeft(topProcesses[i - 1].tty, 12) + '  ' +
+      draw.strLeft(topProcesses[i - 1].user, 16) + ' ' +
+      draw.fmtNum(topProcesses[i - 1].pcpu, 1, 4) + ' ' +
+      draw.fmtNum(topProcesses[i - 1].pmem, 1, 4);
+    } else {
+      lines[i] = ' '.repeat(110);
     }
   }
 
@@ -226,7 +259,7 @@ function displayAll(first) {
   lines.push('');
 
   // Docker
-  lines[0] = lines[0] + cols.log('Docker Container', 'white', 'darkgray') + cols.log('          ID          Image                PORTS                       CPU%     MEM%', 'lightgray', 'darkgray');
+  lines[0] = lines[0] + cols.log('Docker Container', 'white', 'darkgray') + cols.log('             ID            Image                   PORTS                         CPU%     MEM%', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dockerData.length) {
       if (i < 5 || dockerData.length == 5) {
@@ -235,16 +268,16 @@ function displayAll(first) {
           ports = ports + (port.PrivatePort ? port.PrivatePort : '?') + ':' + (port.PublicPort ? port.PublicPort : '?') + ' ';
         });
 //        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 25) + ' ' + draw.strLeft(dockerData[i - 1].id, 10) + ' ' + draw.strLeft(dockerData[i - 1].image, 25) + ' ' + draw.strLeft(ports, 20) + ' ' + draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '% ';
-        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 25) + ' ' + draw.strLeft(dockerData[i - 1].id, 10) + '  ' + draw.strLeft(dockerData[i - 1].image, 19) + '  ' + draw.strLeft(ports, 24) + ' ' + (dockerData[i - 1].state == 'running' ? draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '%' : draw.strRight(dockerData[i - 1].state, 16));
+        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 28) + ' ' + draw.strLeft(dockerData[i - 1].id, 12) + '  ' + draw.strLeft(dockerData[i - 1].image, 22) + '  ' + draw.strLeft(ports, 26) + ' ' + (dockerData[i - 1].state == 'running' ? draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '%' : draw.strRight(dockerData[i - 1].state, 16));
       } else {
         lines[i] = lines[i] + '+' + draw.fmtNum(dockerData.length - 4, 0, 2) + ' more Docker Containers...';
       }
     } else {
-      lines[i] = ' '.repeat(100);
+      lines[i] = ' '.repeat(110);
     }
   }
   if (dockerData.length == 0) {
-    lines[3] = cols.log('                                   No Docker Containers found ...', 'darkgray')
+    lines[3] = cols.log('                                         No Docker Containers found ...', 'darkgray')
   }
 
   console.log();
@@ -255,12 +288,10 @@ function displayAll(first) {
   lines = [];
   lines.push('');
   lines.push('');
-  lines.push('');
-  lines.push('');
 
-  lines[0] = lines[0] + cols.log('MISC:                                                                                               ', 'white', 'darkgray');
-  lines[1] = lines[1] + 'Internet Latency : ' + (dynamicData.inetLatency >= 0 ? draw.fmtNum(dynamicData.inetLatency, 2, 8, 2000, 5000) + ' ms' : ' -              ');
-  lines[2] = lines[2] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? cols.log(' ++','green') : '   ') : ' ---- ');
+  lines[0] = lines[0] + cols.log('MISC:                                                                                                         ', 'white', 'darkgray');
+  lines[1] = lines[1] + 'Internet Latency : ' + (dynamicData.inetLatency >= 0 ? draw.fmtNum(dynamicData.inetLatency, 2, 8, 2000, 5000) + ' ms          ' : ' -                        ');
+  lines[1] = lines[1] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? cols.log(' ++','green') : '   ') : ' ---- ');
 
   console.log();
   lines.forEach(line => {
@@ -286,7 +317,7 @@ function displayAll(first) {
 
   //console.log('\n\n\n\n');
 
-  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 100);
+  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
   footer = draw.strAddRight(footer, '(c) ' + new Date().getFullYear() + ' Sebastian Hildebrandt ');
   console.log(cols.log(footer, 'black', 'gray'));
   draw.hide();
@@ -341,9 +372,9 @@ si.getStaticData().then(resultStatic => {
     si.dockerAll().then(resultDocker => {
       dockerData = resultDocker;
     });
-    draw.up(17);
+    draw.up(20);
     draw.clearline();
-    draw.up(18);
+    draw.up(20);
     //draw.clear()
     displayAll(true);
     setInterval(function () {
