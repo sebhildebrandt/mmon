@@ -1,6 +1,8 @@
 # mmon
 
-![micro-monitor](https://www.plus-innovations.com/images/micro-monitor-logo.png) - micro-mon - Simple CLI system and OS information tool for Linux and OS X implemented in [node.js][nodejs-url] 
+![micro-monitor](https://www.plus-innovations.com/images/micro-monitor-logo.png)
+
+micro-mon - Simple CLI system and OS information tool for Linux and OS X implemented in [node.js][nodejs-url] 
 
   [![NPM Version][npm-image]][npm-url]
   [![NPM Downloads][downloads-image]][downloads-url]
