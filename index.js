@@ -113,7 +113,7 @@ function startScreen() {
   console.log(cpu_host());
 
   console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
-  console.log('                                            STARTING ...');
+  console.log('                                                 STARTING ...');
   console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 
   var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
@@ -132,7 +132,7 @@ function displayAll(first) {
   let fssize = calc_fs();
   let nwconn = calc_nwconn();
 //	console.log(cols.log('                                                    CPU           MEM           FS            DiskIO', 'white'));
-  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload,2,6) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100,2,6) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use,2,6) + ' %');
+  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload,2,6, 70, 85) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100,2,6, 70, 85) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use,2,6, 70, 85) + ' %');
   console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg,2,4) + 'GHz    ' + 'Total: ' + '  ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0,2,4) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0,2,9) + 'GB');
   console.log('FS:  ' + draw.progress(fssize.use, 37, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 7, 70, 90) : '   -.--') + ' °C    ' + 'Free:  ' + draw.fmtNum(dynamicData.mem.free / 1073741824.0,2,6) + 'GB    ' + 'Free:  ' + draw.fmtNum(fssize.free / 1073741824.0,2,8) + 'GB');
 
@@ -226,19 +226,19 @@ function displayAll(first) {
   lines.push('');
 
   // Processes
-  lines[0] = lines[0] + cols.log('PID   Top 5 Processes', 'white', 'darkgray') + cols.log('                                  State          TTY           User             PCPU PMEM', 'lightgray', 'darkgray');
+  lines[0] = lines[0] + cols.log('PID   Top 5 Processes', 'white', 'darkgray') + cols.log('                                  State       TTY          User               CPU%   MEM%', 'lightgray', 'darkgray');
   // top 5 processes
-  let topProcesses = dynamicData.processes.list.sort(function(a, b){return b.pcpu-a.pcpu}).splice(0, 5);
+  let topProcesses = dynamicData.processes.list.sort(function(a, b){return ((b.pcpu-a.pcpu)*100 + b.pmem-a.pmem)}).splice(0, 5);
   for (let i = 1; i <= 5; i++) {
     if (i <= topProcesses.length) {
       lines[i] = lines[i] +
       draw.strLeft(topProcesses[i - 1].pid + '     ', 5) + ' ' +
       draw.strLeft(topProcesses[i - 1].command, 48) + ' ' +
-      draw.strLeft(topProcesses[i - 1].state, 13) + '  ' +
-      draw.strLeft(topProcesses[i - 1].tty, 12) + '  ' +
+      draw.strLeft(topProcesses[i - 1].state, 10) + '  ' +
+      draw.strLeft(topProcesses[i - 1].tty, 11) + '  ' +
       draw.strLeft(topProcesses[i - 1].user, 16) + ' ' +
-      draw.fmtNum(topProcesses[i - 1].pcpu, 1, 4) + ' ' +
-      draw.fmtNum(topProcesses[i - 1].pmem, 1, 4);
+      draw.fmtNum(topProcesses[i - 1].pcpu < 100 ? topProcesses[i - 1].pcpu : 100, 2, 6, 70, 85) + ' ' +
+      draw.fmtNum(topProcesses[i - 1].pmem, 2, 6, 70, 85);
     } else {
       lines[i] = ' '.repeat(110);
     }
@@ -259,7 +259,7 @@ function displayAll(first) {
   lines.push('');
 
   // Docker
-  lines[0] = lines[0] + cols.log('Docker Container', 'white', 'darkgray') + cols.log('             ID            Image                   PORTS                         CPU%     MEM%', 'lightgray', 'darkgray');
+  lines[0] = lines[0] + cols.log('Docker Container', 'white', 'darkgray') + cols.log('             ID            Image                   PORTS                           CPU%   MEM%', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dockerData.length) {
       if (i < 5 || dockerData.length == 5) {
@@ -268,7 +268,7 @@ function displayAll(first) {
           ports = ports + (port.PrivatePort ? port.PrivatePort : '?') + ':' + (port.PublicPort ? port.PublicPort : '?') + ' ';
         });
 //        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 25) + ' ' + draw.strLeft(dockerData[i - 1].id, 10) + ' ' + draw.strLeft(dockerData[i - 1].image, 25) + ' ' + draw.strLeft(ports, 20) + ' ' + draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '% ';
-        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 28) + ' ' + draw.strLeft(dockerData[i - 1].id, 12) + '  ' + draw.strLeft(dockerData[i - 1].image, 22) + '  ' + draw.strLeft(ports, 26) + ' ' + (dockerData[i - 1].state == 'running' ? draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '%' : draw.strRight(dockerData[i - 1].state, 16));
+        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 28) + ' ' + draw.strLeft(dockerData[i - 1].id, 12) + '  ' + draw.strLeft(dockerData[i - 1].image, 22) + '  ' + draw.strLeft(ports, 29) + ' ' + (dockerData[i - 1].state == 'running' ? draw.fmtNum(dockerData[i - 1].cpu_percent < 100 ? dockerData[i - 1].cpu_percent : 100, 2, 6, 70, 85) + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) : draw.strRight(dockerData[i - 1].state, 13));
       } else {
         lines[i] = lines[i] + '+' + draw.fmtNum(dockerData.length - 4, 0, 2) + ' more Docker Containers...';
       }
@@ -332,14 +332,15 @@ function exitHandler(options, err) {
   if (options.exit) {
     draw.show();
     draw.clear();
+    if (err) console.log('Terminated with error ...');
     process.exit();
   }
 }
 
 process.on('exit', exitHandler.bind(null, { cleanup: true }));              // do something when app is closing
 process.on('SIGINT', exitHandler.bind(null, { exit: true }));               // catches ctrl+c event
-process.on('uncaughtException', exitHandler.bind(null, { exit: true }));    // catches uncaught exceptions
-process.on('exit', function () { });
+process.on('uncaughtException', exitHandler.bind(null, { exit: true, err: true }));    // catches uncaught exceptions
+//process.on('exit', function () { });
 
 // ------------------------------------------------
 // handle key stroke
