@@ -56,6 +56,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.1.1          | 2016-08-30     | systeminformation dependency bump |
 | 1.1.0          | 2016-08-29     | top processes |
 | 1.0.4          | 2016-08-23     | tiny fixes (merge, use strict) |
 | 1.0.3          | 2016-08-19     | tiny improvement, updated copyright notes |
