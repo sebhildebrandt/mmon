@@ -133,7 +133,7 @@ function displayAll(first) {
   let nwconn = calc_nwconn();
 //	console.log(cols.log('                                                    CPU           MEM           FS            DiskIO', 'white'));
   console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload,2,6, 70, 85) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100,2,6, 70, 85) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use,2,6, 70, 85) + ' %');
-  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg,2,4) + 'GHz    ' + 'Total: ' + '  ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0,2,4) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0,2,9) + 'GB');
+  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg,2,4) + 'GHz    ' + 'Total: ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0,2,6) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0,2,9) + 'GB');
   console.log('FS:  ' + draw.progress(fssize.use, 37, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 7, 70, 90) : '   -.--') + ' °C    ' + 'Free:  ' + draw.fmtNum(dynamicData.mem.free / 1073741824.0,2,6) + 'GB    ' + 'Free:  ' + draw.fmtNum(fssize.free / 1073741824.0,2,8) + 'GB');
 
   console.log();

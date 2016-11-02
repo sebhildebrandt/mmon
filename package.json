@@ -48,6 +48,6 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "systeminformation": "^3.4.0"
+    "systeminformation": "^3.7.0"
   }
 }
