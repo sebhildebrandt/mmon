@@ -42,6 +42,17 @@ let dockerinterval = interval < 4000 ? interval * 2 : interval;
 // Calc + put together lines
 // ------------------------------------------------
 
+function header() {
+  let line = draw.strLeft(' mmon - micro monitor', 110);
+  line = draw.strAddRight(line, 'Version ' + version + ' ');
+  return line;
+}
+
+function footer() {
+  let line = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
+  line = draw.strAddRight(line, '(c) ' + new Date().getFullYear() + ' Sebastian Hildebrandt ');
+  return line;
+}
 function machine_os() {
   let line = draw.strLeft((staticData.system.manufacturer + ' ' + staticData.system.model).trim(), 110);
   line = draw.strAddRight(line, staticData.os.distro + ' - ' + staticData.os.release + ' - Kernel: ' + staticData.os.kernel);
@@ -108,7 +119,7 @@ function calc_nwconn() {
 function startScreen() {
   primatyNet = calc_primary_net();
   draw.clear();
-  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 110), 'black', 'gray'));
+  console.log(cols.log(header(), 'black', 'gray'));
   console.log(machine_os());
   console.log(cpu_host());
 
@@ -116,15 +127,13 @@ function startScreen() {
   console.log('                                                 STARTING ...');
   console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
 
-  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
-  footer = draw.strAddRight(footer, '(c) ' + new Date().getFullYear() + ' Sebastian Hildebrandt ');
-  console.log(cols.log(footer, 'black', 'gray'));
+  console.log(cols.log(footer(), 'black', 'gray'));
   draw.hide();
 }
 
 function displayAll(first) {
   if (!first) draw.up(39);
-  console.log(cols.log(draw.strLeft(' mmon - System Information - Version ' + version, 110), 'black', 'gray'));
+  console.log(cols.log(header(), 'black', 'gray'));
   console.log(machine_os());
   console.log(cpu_host());
   console.log();
@@ -317,9 +326,7 @@ function displayAll(first) {
 
   //console.log('\n\n\n\n');
 
-  var footer = draw.strLeft(' SI-Version: ' + si.version() + '  Node: ' + process.versions.node + '  V8: ' + process.versions.v8, 110);
-  footer = draw.strAddRight(footer, '(c) ' + new Date().getFullYear() + ' Sebastian Hildebrandt ');
-  console.log(cols.log(footer, 'black', 'gray'));
+  console.log(cols.log(footer(), 'black', 'gray'));
   draw.hide();
 }
 

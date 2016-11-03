@@ -56,6 +56,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.1.4          | 2016-11-03     | minor refactoring, dependencies bump |
 | 1.1.3          | 2016-11-02     | bug fix mem total, dependencies bump |
 | 1.1.2          | 2016-08-30     | tiny fixes, design improvement |
 | 1.1.1          | 2016-08-30     | systeminformation dependency bump |
