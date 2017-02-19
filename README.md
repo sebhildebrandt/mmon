@@ -56,6 +56,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 1.1.5          | 2017-02-19     | dependencies bump |
 | 1.1.4          | 2016-11-03     | minor refactoring, dependencies bump |
 | 1.1.3          | 2016-11-02     | bug fix mem total, dependencies bump |
 | 1.1.2          | 2016-08-30     | tiny fixes, design improvement |
@@ -98,7 +99,7 @@ All other trademarks are the property of their respective owners.
 
 >The [`MIT`][license-url] License (MIT)
 >
->Copyright &copy; 2014-2016 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
+>Copyright &copy; 2014-2017 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
 >
 >Permission is hereby granted, free of charge, to any person obtaining a copy
 >of this software and associated documentation files (the "Software"), to deal

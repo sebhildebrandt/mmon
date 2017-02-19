@@ -5,7 +5,7 @@
 // ----------------------------------------------------------------------------------
 // Description:   mmon - micro monitor - System Information CLI tool
 //                based on Node.js
-// Copyright:     (c) 2016
+// Copyright:     (c) 2016 - 2017
 // Author:        Sebastian Hildebrandt
 // ----------------------------------------------------------------------------------
 // Contributors:  -
