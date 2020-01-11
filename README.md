@@ -2,7 +2,7 @@
 
 ![micro-monitor](https://www.plus-innovations.com/images/micro-monitor-logo.png)
 
-micro-mon - Simple CLI system and OS information tool for Linux and OS X implemented in [node.js][nodejs-url] 
+micro-mon - Simple CLI system and OS information tool for Linux, macOS and windows implemented in [node.js][nodejs-url]
 
   [![NPM Version][npm-image]][npm-url]
   [![NPM Downloads][downloads-image]][downloads-url]
@@ -36,19 +36,19 @@ Press `q` (quit) or `CTRL-c` to exit mmon.
 - users online
 - [docker][docker-url] containers
 
-I tested it on several Debian, Raspbian, Ubuntu distributions, inside Docker containers as well as OS X (Mavericks, Yosemite, El Captain).
+I tested it on several Debian, Raspbian, Ubuntu distributions, inside Docker containers as well as OS X (Mavericks, Yosemite, El Captain, Sierra, High Sierra, Mojave, Catalina) and Windows 10.
 
-This CLI tool depends on the [systeminformation][systeminformation-url] npm package that I wrote. Have a look at it, if you are interested. 
+This CLI tool depends on the [systeminformation][systeminformation-url] npm package that I wrote. Have a look at it, if you are interested.
 
 ## Command Line Options
 
 **Set interval**
 
-The default update interval is 2 seconds but you can change it easily: 
-the following command line option sets it to 5 seconds: 
-  
+The default update interval is 2 seconds but you can change it easily:
+the following command line option sets it to 5 seconds:
+
 ```
-mmon -i 5 
+mmon -i 5
 ```
 
 
@@ -56,6 +56,7 @@ mmon -i 5
 
 | Version        | Date           | Comment  |
 | -------------- | -------------- | -------- |
+| 2.0.0          | 2020-01-11     | added windows support, updated dependencies, fixes and refactoring |
 | 1.1.5          | 2017-02-19     | dependencies bump |
 | 1.1.4          | 2016-11-03     | minor refactoring, dependencies bump |
 | 1.1.3          | 2016-11-02     | bug fix mem total, dependencies bump |
@@ -85,7 +86,7 @@ Written by Sebastian Hildebrandt [sebhildebrandt](https://github.com/sebhildebra
 
 #### Contributers
 
-- none so far. Comments, pull requests welcome ;-) 
+- none so far. Comments, pull requests welcome ;-)
 
 ## Copyright Information
 
@@ -99,7 +100,7 @@ All other trademarks are the property of their respective owners.
 
 >The [`MIT`][license-url] License (MIT)
 >
->Copyright &copy; 2014-2017 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
+>Copyright &copy; 2014-2020 Sebastian Hildebrandt, [+innovations](http://www.plus-innovations.com).
 >
 >Permission is hereby granted, free of charge, to any person obtaining a copy
 >of this software and associated documentation files (the "Software"), to deal

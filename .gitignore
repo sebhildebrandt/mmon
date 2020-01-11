@@ -22,7 +22,7 @@ coverage
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
-# MacOS 
+# MacOS
 .DS_Store
 .Spotlight-V100
 .Trashes
@@ -57,3 +57,12 @@ npm*
 .svn
 .hg
 CVS
+.eslintrc.json
+package-lock.json
+yarn.lock
+
+test/
+dist/
+tsconfig.json
+tslint.json
+typings.d.ts

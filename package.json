@@ -42,12 +42,13 @@
   },
   "os": [
     "darwin",
-    "linux"
+    "linux",
+    "win32"
   ],
   "engines": {
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "systeminformation": "^3.17.0"
+    "systeminformation": "^4.18.0"
   }
 }

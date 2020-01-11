@@ -28,7 +28,7 @@ let time = require('./lib/libTime');
 let staticData = {};
 let dynamicData = {};
 let dockerData = [];
-let primatyNet = {};
+let primaryNet = {};
 
 // ------------------------------------------------
 // Params
@@ -70,7 +70,7 @@ function calc_primary_net() {
   let iface_ip4 = '';
   let iface_ip6 = '';
   staticData.net.forEach(iface => {
-    if (iface.internal == false) {
+    if (dynamicData.networkStats && dynamicData.networkStats[0] && iface.iface === dynamicData.networkStats[0].iface) {
       iface_name = iface_name || iface.iface;
       iface_ip4 = iface_ip4 || iface.ip4;
       iface_ip6 = iface_ip6 || iface.ip6;
@@ -117,7 +117,6 @@ function calc_nwconn() {
 // ------------------------------------------------
 
 function startScreen() {
-  primatyNet = calc_primary_net();
   draw.clear();
   console.log(cols.log(header(), 'black', 'gray'));
   console.log(machine_os());
@@ -132,6 +131,9 @@ function startScreen() {
 }
 
 function displayAll(first) {
+  // if (!primaryNet.iface) {
+  primaryNet = calc_primary_net();
+  // }
   if (!first) draw.up(39);
   console.log(cols.log(header(), 'black', 'gray'));
   console.log(machine_os());
@@ -140,10 +142,10 @@ function displayAll(first) {
 
   let fssize = calc_fs();
   let nwconn = calc_nwconn();
-//	console.log(cols.log('                                                    CPU           MEM           FS            DiskIO', 'white'));
-  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload,2,6, 70, 85) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100,2,6, 70, 85) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use,2,6, 70, 85) + ' %');
-  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg,2,4) + 'GHz    ' + 'Total: ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0,2,6) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0,2,9) + 'GB');
-  console.log('FS:  ' + draw.progress(fssize.use, 37, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 7, 70, 90) : '   -.--') + ' °C    ' + 'Free:  ' + draw.fmtNum(dynamicData.mem.free / 1073741824.0,2,6) + 'GB    ' + 'Free:  ' + draw.fmtNum(fssize.free / 1073741824.0,2,8) + 'GB');
+  //	console.log(cols.log('                                                    CPU           MEM           FS            DiskIO', 'white'));
+  console.log('CPU: ' + draw.progress(dynamicData.currentLoad.currentload, 37, true, true) + '      ' + cols.log('CPU:  ', 'white') + draw.fmtNum(dynamicData.currentLoad.currentload, 2, 6, 70, 85) + '  %    ' + cols.log('MEM:   ', 'white') + draw.fmtNum(dynamicData.mem.used / dynamicData.mem.total * 100, 2, 6, 70, 85) + ' %    ' + cols.log('FS:      ', 'white') + draw.fmtNum(fssize.use, 2, 6, 70, 85) + ' %');
+  console.log('MEM: ' + draw.progress(dynamicData.mem.used / dynamicData.mem.total * 100, 37, true, true) + '      Speed:' + '  ' + draw.fmtNum(dynamicData.cpuCurrentspeed.avg, 2, 4) + 'GHz    ' + 'Total: ' + draw.fmtNum(dynamicData.mem.total / 1073741824.0, 2, 6) + 'GB    ' + 'Total:' + draw.fmtNum(fssize.size / 1073741824.0, 2, 9) + 'GB');
+  console.log('FS:  ' + draw.progress(fssize.use, 37, true, true) + '      Temp:' + (dynamicData.temp && dynamicData.temp.main && dynamicData.temp.main > 0 ? draw.fmtNum(dynamicData.temp.main, 2, 7, 70, 90) : '   -.--') + ' °C    ' + 'Free:  ' + draw.fmtNum(dynamicData.mem.free / 1073741824.0, 2, 6) + 'GB    ' + 'Free:  ' + draw.fmtNum(fssize.free / 1073741824.0, 2, 8) + 'GB');
 
   console.log();
   let lines = [];
@@ -162,10 +164,10 @@ function displayAll(first) {
   lines[2] = lines[2] + '      ' + 'wIO: ' + (dynamicData.disksIO.wIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.wIO_sec, 2, 10, 200, 500) + ' per s' : ' -              ');
   lines[3] = lines[3] + '      ' + 'tIO: ' + (dynamicData.disksIO.tIO_sec >= 0 ? draw.fmtNum(dynamicData.disksIO.tIO_sec, 2, 10, 200, 500) + ' per s' : ' -              ');
 
-  lines[0] = lines[0] + '                       ' + cols.log('NET:   ', 'white') + ('              ' + primatyNet.iface).substr(-12);
-  lines[1] = lines[1] + '      ' + 'IP: ' + ('               ' + primatyNet.ip4).substr(-15);
-  lines[2] = lines[2] + '      ' + 'RX: ' + (dynamicData.networkStats.rx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.rx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
-  lines[3] = lines[3] + '      ' + 'TX: ' + (dynamicData.networkStats.tx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.tx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
+  lines[0] = lines[0] + '                       ' + cols.log('NET:   ', 'white') + ('              ' + primaryNet.iface).substr(-12);
+  lines[1] = lines[1] + '      ' + 'IP: ' + ('               ' + primaryNet.ip4).substr(-15);
+  lines[2] = lines[2] + '      ' + 'RX: ' + (dynamicData.networkStats && dynamicData.networkStats[0] && dynamicData.networkStats[0].rx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats[0].rx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
+  lines[3] = lines[3] + '      ' + 'TX: ' + (dynamicData.networkStats && dynamicData.networkStats[0] && dynamicData.networkStats[0].rx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats[0].tx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -             ');
 
   lines[0] = lines[0] + '     ' + cols.log('NW-Connect. ', 'white');
   lines[1] = lines[1] + '     All:    ' + draw.fmtNum(nwconn.all, 0, 4);
@@ -207,7 +209,7 @@ function displayAll(first) {
   }
 
   // Users
-  lines[0] = lines[0] + cols.log('Users online', 'white','darkgray') + cols.log('     TTY        IP                     DATE', 'lightgray', 'darkgray');
+  lines[0] = lines[0] + cols.log('Users online', 'white', 'darkgray') + cols.log('     TTY        IP                     DATE', 'lightgray', 'darkgray');
   for (let i = 1; i <= 5; i++) {
     if (i <= dynamicData.users.length) {
       if (i < 5 || dynamicData.users.length == 5) {
@@ -237,17 +239,17 @@ function displayAll(first) {
   // Processes
   lines[0] = lines[0] + cols.log('PID   Top 5 Processes', 'white', 'darkgray') + cols.log('                                  State       TTY          User               CPU%   MEM%', 'lightgray', 'darkgray');
   // top 5 processes
-  let topProcesses = dynamicData.processes.list.sort(function(a, b){return ((b.pcpu-a.pcpu)*100 + b.pmem-a.pmem)}).splice(0, 5);
+  let topProcesses = dynamicData.processes.list.sort(function (a, b) { return ((b.pcpu - a.pcpu) * 100 + b.pmem - a.pmem) }).splice(0, 5);
   for (let i = 1; i <= 5; i++) {
     if (i <= topProcesses.length) {
       lines[i] = lines[i] +
-      draw.strLeft(topProcesses[i - 1].pid + '     ', 5) + ' ' +
-      draw.strLeft(topProcesses[i - 1].command, 48) + ' ' +
-      draw.strLeft(topProcesses[i - 1].state, 10) + '  ' +
-      draw.strLeft(topProcesses[i - 1].tty, 11) + '  ' +
-      draw.strLeft(topProcesses[i - 1].user, 16) + ' ' +
-      draw.fmtNum(topProcesses[i - 1].pcpu < 100 ? topProcesses[i - 1].pcpu : 100, 2, 6, 70, 85) + ' ' +
-      draw.fmtNum(topProcesses[i - 1].pmem, 2, 6, 70, 85);
+        draw.strLeft(topProcesses[i - 1].pid + '     ', 5) + ' ' +
+        draw.strLeft(topProcesses[i - 1].command, 48) + ' ' +
+        draw.strLeft(topProcesses[i - 1].state, 10) + '  ' +
+        draw.strLeft(topProcesses[i - 1].tty, 11) + '  ' +
+        draw.strLeft(topProcesses[i - 1].user, 16) + ' ' +
+        draw.fmtNum(topProcesses[i - 1].pcpu < 100 ? topProcesses[i - 1].pcpu : 100, 2, 6, 70, 85) + ' ' +
+        draw.fmtNum(topProcesses[i - 1].pmem, 2, 6, 70, 85);
     } else {
       lines[i] = ' '.repeat(110);
     }
@@ -276,7 +278,7 @@ function displayAll(first) {
         dockerData[i - 1].ports.forEach(port => {
           ports = ports + (port.PrivatePort ? port.PrivatePort : '?') + ':' + (port.PublicPort ? port.PublicPort : '?') + ' ';
         });
-//        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 25) + ' ' + draw.strLeft(dockerData[i - 1].id, 10) + ' ' + draw.strLeft(dockerData[i - 1].image, 25) + ' ' + draw.strLeft(ports, 20) + ' ' + draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '% ';
+        //        lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 25) + ' ' + draw.strLeft(dockerData[i - 1].id, 10) + ' ' + draw.strLeft(dockerData[i - 1].image, 25) + ' ' + draw.strLeft(ports, 20) + ' ' + draw.fmtNum(dockerData[i - 1].cpu_percent, 2, 6, 70, 85) + '% ' + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) + '% ';
         lines[i] = lines[i] + draw.strLeft(dockerData[i - 1].name, 28) + ' ' + draw.strLeft(dockerData[i - 1].id, 12) + '  ' + draw.strLeft(dockerData[i - 1].image, 22) + '  ' + draw.strLeft(ports, 29) + ' ' + (dockerData[i - 1].state == 'running' ? draw.fmtNum(dockerData[i - 1].cpu_percent < 100 ? dockerData[i - 1].cpu_percent : 100, 2, 6, 70, 85) + ' ' + draw.fmtNum(dockerData[i - 1].mem_percent, 2, 6, 70, 85) : draw.strRight(dockerData[i - 1].state, 13));
       } else {
         lines[i] = lines[i] + '+' + draw.fmtNum(dockerData.length - 4, 0, 2) + ' more Docker Containers...';
@@ -300,7 +302,7 @@ function displayAll(first) {
 
   lines[0] = lines[0] + cols.log('MISC:                                                                                                         ', 'white', 'darkgray');
   lines[1] = lines[1] + 'Internet Latency : ' + (dynamicData.inetLatency >= 0 ? draw.fmtNum(dynamicData.inetLatency, 2, 8, 2000, 5000) + ' ms          ' : ' -                        ');
-  lines[1] = lines[1] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? cols.log(' ++','green') : '   ') : ' ---- ');
+  lines[1] = lines[1] + 'Battery Level    :   ' + (dynamicData.battery.hasbattery ? draw.fmtNum(dynamicData.battery.percent, 1, 5) + '%' + (dynamicData.battery.ischarging ? cols.log(' ++', 'green') : '   ') : ' ---- ');
 
   console.log();
   lines.forEach(line => {
@@ -315,8 +317,8 @@ function displayAll(first) {
    lines[3] = draw.strAdd(lines[3], , 25);
 
    console.log();
-   console.log(cols.log('NET: ', 'white') + ('           ' + primatyNet.iface.substr(-11)));
-   console.log('IP: ' + ('               ' + primatyNet.ip4).substr(-15));
+   console.log(cols.log('NET: ', 'white') + ('           ' + primaryNet.iface.substr(-11)));
+   console.log('IP: ' + ('               ' + primaryNet.ip4).substr(-15));
    console.log('RX: ' + (dynamicData.networkStats.rx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.rx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -'));
    console.log('TX: ' + (dynamicData.networkStats.tx_sec >= 0 ? draw.fmtNum(dynamicData.networkStats.tx_sec, 2, 11, 100000, 200000) + ' B/s' : ' -'));
    */
