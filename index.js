@@ -335,13 +335,60 @@ function displayAll(first) {
 // ------------------------------------------------
 // handle exits
 // ------------------------------------------------
+function getStaticData(callback) {
+
+  return new Promise((resolve) => {
+    process.nextTick(() => {
+
+      let data = {};
+
+      data.version = si.version();
+
+      Promise.all([
+        si.system(),
+        // system.bios(),
+        // system.baseboard(),
+        // system.chassis(),
+        si.osInfo(),
+        // osInfo.uuid(),
+        // osInfo.versions(),
+        si.cpu(),
+        // cpu.cpuFlags(),
+        // graphics.graphics(),
+        si.networkInterfaces(),
+        // memory.memLayout(),
+        // filesystem.diskLayout()
+      ]).then(res => {
+        data.system = res[0];
+        // data.bios = res[1];
+        // data.baseboard = res[2];
+        // data.chassis = res[3];
+        data.os = res[1];
+        // data.uuid = res[5];
+        // data.versions = res[6];
+        data.cpu = res[2];
+        // data.cpu.flags = res[8];
+        // data.graphics = res[9];
+        data.net = res[3];
+        // data.memLayout = res[11];
+        // data.diskLayout = res[12];
+        if (callback) { callback(data); }
+        resolve(data);
+      });
+    });
+  });
+}
+
+// ------------------------------------------------
+// handle exits
+// ------------------------------------------------
 function exitHandler(options, err) {
   if (options.cleanup) { }
-  if (err) { }	//console.log(err.stack);
+  if (err) { console.log(err.stack) }	//;
   if (options.exit) {
-    draw.show();
-    draw.clear();
-    if (err) console.log('Terminated with error ...');
+    // draw.show();
+    // draw.clear();
+    // if (err) console.log('Terminated with error ...');
     process.exit();
   }
 }
@@ -373,7 +420,7 @@ stdin.on('data', function (key) {
 // main loop
 // ------------------------------------------------
 
-si.getStaticData().then(resultStatic => {
+getStaticData().then(resultStatic => {
   staticData = resultStatic;
   startScreen();
 
