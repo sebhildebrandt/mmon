@@ -138,7 +138,7 @@ of their respective owners.
 [systeminformation-url]: https://github.com/sebhildebrandt/systeminformation
 [nodejs-url]: https://nodejs.org/en/
 [docker-url]: https://www.docker.com/
-[daviddm-img]: https://img.shields.io/david/sebhildebrandt/mmon.svg?style=flat-square
+[daviddm-img]: https://img.shields.io/librariesio/github/sebhildebrandt/mmon?style=flat-square
 [daviddm-url]: https://david-dm.org/sebhildebrandt/mmon
 [issues-img]: https://img.shields.io/github/issues/sebhildebrandt/mmon.svg?style=flat-square
 [issues-url]: https://github.com/sebhildebrandt/mmon/issues
