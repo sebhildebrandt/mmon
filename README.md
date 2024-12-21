@@ -1,6 +1,6 @@
 # mmon
 
-<img src="https://www.plus-innovations.com/images/micro-monitor-logo.png" alt="mmon logo">
+<img src="assets//micro-monitor-logo.png" alt="mmon logo">
 
 micro-mon - Simple CLI system and OS information tool for Linux, macOS and
 windows implemented in [node.js][nodejs-url]
@@ -24,7 +24,7 @@ Press `q` (quit) or `CTRL-c` to exit mmon.
 
 ## Features
 
-<img src="https://www.plus-innovations.com/images/micro-monitor-1-1-0.png" alt="mmon screenshot">
+<img src="assets/micro-monitor-1-1-0.png" alt="mmon screenshot">
 
 - current CPU load
 - current MEM usage
